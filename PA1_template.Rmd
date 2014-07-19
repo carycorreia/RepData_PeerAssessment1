@@ -151,7 +151,7 @@ The following code shows how to create the new histogram:
 ```{r histo_new_data, echo=TRUE}
 steps.per.day2<-aggregate(steps~date, data.new, sum)
 ggplot(steps.per.day2, aes(x=steps)) +
-        geom_histogram(fill="blue")+
+        geom_histogram(fill="blue", , binwidth=(705))+
         theme_bw()+
         labs(title="Histogram of Steps per day- Using Imputed Steps Methodology")+
         ylab("Frequency of Steps")+

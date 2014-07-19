@@ -164,7 +164,7 @@ The following code shows how to create the new histogram:
 ```r
 steps.per.day2<-aggregate(steps~date, data.new, sum)
 ggplot(steps.per.day2, aes(x=steps)) +
-        geom_histogram(fill="blue")+
+        geom_histogram(fill="blue", , binwidth=(705))+
         theme_bw()+
         labs(title="Histogram of Steps per day- Using Imputed Steps Methodology")+
         ylab("Frequency of Steps")+
@@ -172,10 +172,6 @@ ggplot(steps.per.day2, aes(x=steps)) +
         theme(plot.title=element_text(lineheight=2, face="bold"))+
         theme(axis.title.x=element_text(lineheight=1, face="bold"))+
         theme(axis.title.y=element_text(lineheight=1, face="bold"))
-```
-
-```
-## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
 ```
 
 ![plot of chunk histo_new_data](figure/histo_new_data.png) 
