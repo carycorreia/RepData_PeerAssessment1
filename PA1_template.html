@@ -360,7 +360,7 @@ Note:  I did not post the results of that file because of its size</p>
 
 <p>The following code shows how to create the new histogram:</p>
 
-<pre><code class="r">steps.per.day2&lt;-aggregate(steps~date, data.new, sum)
+<pre><code class="r">steps.per.day2&lt;-aggregate(steps~date, data.new, sum)  
 ggplot(steps.per.day2, aes(x=steps)) +
         geom_histogram(fill=&quot;blue&quot;, , binwidth=(705))+
         theme_bw()+
@@ -388,7 +388,7 @@ impact.mean&lt;-mean.steps - mean.steps.2
 impact.median&lt;-median.steps - median.steps.2
 </code></pre>
 
-<p>The new dataset has a mean of 10766.2 and a median of <code>median.steps2</code>
+<p>The new dataset has a mean of 10766.2 and a median of 10766.2
 The difference between the means is 0; Result: no large shift in the output mean
 The difference between the medians is -1.2; Result: no large shift in the output median</p>
 

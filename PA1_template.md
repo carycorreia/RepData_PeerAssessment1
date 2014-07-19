@@ -162,7 +162,7 @@ This step was very similar to the original histogram but this time we use the ne
 The following code shows how to create the new histogram:
 
 ```r
-steps.per.day2<-aggregate(steps~date, data.new, sum)
+steps.per.day2<-aggregate(steps~date, data.new, sum)  
 ggplot(steps.per.day2, aes(x=steps)) +
         geom_histogram(fill="blue", , binwidth=(705))+
         theme_bw()+
@@ -191,7 +191,7 @@ impact.mean<-mean.steps - mean.steps.2
 impact.median<-median.steps - median.steps.2
 ```
 
-The new dataset has a mean of 10766.2 and a median of `median.steps2`
+The new dataset has a mean of 10766.2 and a median of 10766.2
 The difference between the means is 0; Result: no large shift in the output mean
 The difference between the medians is -1.2; Result: no large shift in the output median
 
