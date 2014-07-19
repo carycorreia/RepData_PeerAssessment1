@@ -176,6 +176,7 @@ impact.median<-median.steps - median.steps.2
 ```
 
 The new dataset has a mean of `r mean.steps.2` and a median of `r median.steps.2`
+
 The difference between the means is `r impact.mean`; Result: no large shift in the output mean
 The difference between the medians is `r impact.median`; Result: no large shift in the output median
 
