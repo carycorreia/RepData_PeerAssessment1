@@ -175,10 +175,14 @@ impact.mean<-mean.steps - mean.steps.2
 impact.median<-median.steps - median.steps.2
 ```
 
-The new dataset has a mean of `r mean.steps.2` and a median of `r median.steps.2`
+The new dataset has a mean of `r mean.steps.2` 
+The new dataset has a median of `r median.steps.2`
 
-The difference between the means is `r impact.mean`; Result: no large shift in the output mean
-The difference between the medians is `r impact.median`; Result: no large shift in the output median
+The difference between the means is `r impact.mean`
+Result: no large shift in the output mean
+
+The difference between the medians is `r impact.median`; 
+Result: no large shift in the output median
 
 ## Are there differences in activity patterns between weekdays and weekends?
 For this part of the assignment we had to take the date and then compute whether that data point fell on a weekend or a weekday and then we would graph the results to see if there was any visual differences between the two.
