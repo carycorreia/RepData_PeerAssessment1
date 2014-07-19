@@ -102,7 +102,7 @@ H.interval<-mean.matrix[mean.matrix$avgSteps==max(mean.matrix$avgSteps),]   # ca
 ## Determine the interval where that maximum occurred        
 max.interval<-  H.interval$interval                                         # save interval where max occurrs
 ```
-#### The interval where the maximum average number of steps (206.2) occurs is 835.
+##### The interval where the maximum average number of steps (206.2) occurs is 835.
 
 ## Imputing missing values
 #### 1. Calculate and Report the total number of missing values
@@ -152,7 +152,7 @@ names(data.new)<-c("steps", "date", "interval")      # fix the column names to m
 new.size<-nrow(data.new)
 ```
 
-The resulting database has 3 variables with 17568.
+The resulting database has 3 variables with 17568 rows.
 Note:  I did not post the results of that file because of its size
 
 
