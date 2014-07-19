@@ -175,6 +175,7 @@ ggplot(steps.per.day2, aes(x=steps)) +
 ```
 
 ![plot of chunk histo_new_data](figure/histo_new_data.png) 
+
 The resulting graph shows a similar distribution pattern.
 There is of course more points which show up near the central part of the graph.
 

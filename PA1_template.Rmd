@@ -160,6 +160,7 @@ ggplot(steps.per.day2, aes(x=steps)) +
         theme(axis.title.x=element_text(lineheight=1, face="bold"))+
         theme(axis.title.y=element_text(lineheight=1, face="bold"))
 ```
+
 The resulting graph shows a similar distribution pattern.
 There is of course more points which show up near the central part of the graph.
 
