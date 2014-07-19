@@ -1,3 +1,21 @@
+Note:
+For this assignment I opted to put very detailed information into my Rmd file.
+Please refer to that output when trying to understand my methodology and documentation for the project.
+
+This repository will have the following documents:
+- original activity.csv     unzipped copy of the file we processed for the assignment
+- activity.zip              same as above but zipped
+- doc                       folder with instructions.pdf
+- figure                    folder with all output graphs used in the assignment
+- instructions_fig          folder with sample of a panelplot.png
+- PA1_template.html         html output of assignment
+- PA1_template.md           markdown output of assignment
+- PA1_template.Rmd          R markdown for this assignment
+- RandR_PA_1_snippets.R     R code used to create markdown document
+- README.md                 this file
+
+### The following is from the original README.md file that was forked
+
 ## Introduction
 
 It is now possible to collect a large amount of data about personal

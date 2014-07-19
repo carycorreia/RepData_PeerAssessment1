@@ -19,7 +19,8 @@ As you go through each part of the assignment you'll note that I follow this for
 The data is a basic 'csv' file which is easily handled with a read.csv function.
 Both 'date' and 'interval' fields had to be reformatted.
 Note:  I disabled the scientific notation and set the number of digits to ease in readability of any output numbers
-```{r setup, echo=TRUE}
+
+```r
 setwd('/Users/carycorreia/Documents/Exploratory_Data_Project1/RepData_PeerAssessment1') # set up workspace
 options(scipen=999, digits=1)                                                           # disable scientific notation; fix digits
 data<-read.csv('activity.csv', header=TRUE, sep="," , na.strings="NA",)                 # read the data
@@ -34,7 +35,8 @@ The data had to be aggregated into a table so that we could draw the histogram o
 This meant taking the actual number of steps as our 'X' and then counting the number of times those steps appeared in the database.
 
 The histogram code is shown below:
-```{r first_histo, echo=TRUE}
+
+```r
 library(ggplot2)
 steps.per.day<-aggregate(steps~date, data, sum)                         # create count table for steps
 ggplot(steps.per.day, aes(x=steps)) +                                   # start plot
@@ -48,6 +50,8 @@ ggplot(steps.per.day, aes(x=steps)) +                                   # start 
         theme(axis.title.y=element_text(lineheight=2, face="bold"))     # format y-axis
 ```
 
+![plot of chunk first_histo](figure/first_histo.png) 
+
 The histogram above does not have any NA's in the database.
 These were removed when I used the aggregate function to create the table that fed the histogram.
 
@@ -56,21 +60,23 @@ Missing data points are exactly that....missing.  My process follows this format
 
 #### 2. Calculate and report the mean and median total number of steps taken per day
 Once the data table was set up to perform the histogram it was easy enough to simply call the mean() and median() functions.
-```{r first_mean_median, echo=TRUE}
+
+```r
 mean.steps<-mean(steps.per.day$steps, na.rm=TRUE)               # calc the mean
 median.steps<-median(steps.per.day$steps, na.rm=TRUE)           # calc the median
 ```
 
 #### Output Results:
-##### The mean for the number of steps per day is `r mean.steps`.
-##### The median for the number of steps per day is `r median.steps`.
+##### The mean for the number of steps per day is 10766.2.
+##### The median for the number of steps per day is 10765.
 
 ## What is the average daily activity pattern?
 #### 1. Make a time series plot (ie: type = "l") of Interval and avg # of Steps
 In this part of the assignment I wanted to create a "clean" set of data without the NA's.  Later on I will use the nrow() on this dataset to calculate the number of NA's.  Then I utilize the tapply function to calculate the mean for every 5-min interval (as stated in the assignment notes).  
 
 The following code creates the time series plot:
-```{r activity_1, echo=TRUE}   
+
+```r
 data.clean<-data[!is.na(data$steps),]                                                   # take out na's
 mean.col<-as.data.frame(tapply(data.clean$steps, data.clean$interval, mean))            # calc the mean per interval
 mean.matrix<-cbind(unique(data.clean$interval), mean.col)                               # create a matrix with means
@@ -81,36 +87,41 @@ names(mean.matrix)<-c("interval","avgSteps")                                    
         sub=NULL, xlab="5 Minute Interval", ylab="Average Number of Steps")             # set axis labels
 ```
 
+![plot of chunk activity_1](figure/activity_1.png) 
+
 #### Analysis of Graph
 The output graph shows fairly low activity between the 0 to 500 interval mark. 
 The activity then start to gradually ramp up then die back down again with some variability until the 2000th interval.
 At this point the activity starts to ramp down to zero.
 
 The following code is used to determine the high point of activity and the interval where it occurred.
-```{r max_interval, echo=TRUE}
+
+```r
 ## Determine the 5minute interval where we had the highest number of average steps
 H.interval<-mean.matrix[mean.matrix$avgSteps==max(mean.matrix$avgSteps),]   # calculate the high point
 ## Determine the interval where that maximum occurred        
 max.interval<-  H.interval$interval                                         # save interval where max occurrs
 ```
-#### The interval where the maximum average number of steps (`r H.interval$avgSteps`) occurs is `r max.interval`.
+#### The interval where the maximum average number of steps (206.2) occurs is 835.
 
 ## Imputing missing values
 #### 1. Calculate and Report the total number of missing values
 The calculation for the number of NA rows is simply created by finding the difference betweed the number of rows in the full dataset and the number of rows from my clean database
 
 The following difference code is used:
-```{r missing, echo=TRUE}
+
+```r
 na.total<-nrow(data)-nrow(data.clean)
 ```
 #### Output
-The total number of missing values in the dataset is `r na.total`
+The total number of missing values in the dataset is 2304
 
 #### 2. Devise a strategy for filling in all of the missing values in the dataset
 A simple way to impute or fill in the missing data is to take the average of the intervals.  For any given interval the average of the non-missing interval values will then be inserted into the database where the NA's were located.
 
 The code below is tagged with pseudo-code comments to walk the reader through the logic and steps for the imputation:
-```{r impute, echo=TRUE}
+
+```r
 ## Create a data quality field to track good steps and bad steps
 data$step.bad<-is.na(data$steps)
 ## Copy the full steps column into a new column....this will be used to overwrite the NAs
@@ -131,7 +142,8 @@ As I was working on the files I opted to build off of the 'data' table I origina
 At this point I had already built up a couple of redundant columns ('step.bad', and "Impute").  In order to fulfull this part of the assignment I simply had to copy 'data' to a new file ('data.new') drop the original 'steps' column (because this one had NA's in it), drop the 'steps.bad' column (because it wasn't needed) and then rename my columns to match the original dataset
 
 The following code performs these steps:
-```{r new_dataset,echo=TRUE}
+
+```r
 data.new<-data                                       # copy the original dataset into a new dataset
 drops<-c("steps","step.bad")                         # identify columns for removal
 data.new<-data.new[,!(names(data.new)%in% drops)]    # drop the columns
@@ -140,7 +152,7 @@ names(data.new)<-c("steps", "date", "interval")      # fix the column names to m
 new.size<-nrow(data.new)
 ```
 
-The resulting database has 3 variables with `r new.size`.
+The resulting database has 3 variables with 17568.
 Note:  I did not post the results of that file because of its size
 
 
@@ -148,7 +160,8 @@ Note:  I did not post the results of that file because of its size
 This step was very similar to the original histogram but this time we use the new dataset so we can contrast the two graphs and look at what impact our imputation would have on the output.  I opted to produce the original graph in red and the new graph in blue.
 
 The following code shows how to create the new histogram:
-```{r histo_new_data, echo=TRUE}
+
+```r
 steps.per.day2<-aggregate(steps~date, data.new, sum)
 ggplot(steps.per.day2, aes(x=steps)) +
         geom_histogram(fill="blue")+
@@ -160,12 +173,19 @@ ggplot(steps.per.day2, aes(x=steps)) +
         theme(axis.title.x=element_text(lineheight=1, face="bold"))+
         theme(axis.title.y=element_text(lineheight=1, face="bold"))
 ```
+
+```
+## stat_bin: binwidth defaulted to range/30. Use 'binwidth = x' to adjust this.
+```
+
+![plot of chunk histo_new_data](figure/histo_new_data.png) 
 The resulting graph shows a similar distribution pattern.
 There is of course more points which show up near the central part of the graph.
 
 The following code is use to calculate the new mean and median.
 I also compute the differential between old and new means and medians to quantify the impact of the imputation:
-```{r impact, echo=TRUE}
+
+```r
 ##     Calculate and report the mean and median total number of steps taken per day
 mean.steps.2<-mean(steps.per.day2$steps)
 median.steps.2<-median(steps.per.day2$steps)        
@@ -174,9 +194,9 @@ impact.mean<-mean.steps - mean.steps.2
 impact.median<-median.steps - median.steps.2
 ```
 
-The new dataset has a mean of `r mean.steps.2` and a median of `median.steps2`
-The difference between the means is `r impact.mean`; Result: no large shift in the output mean
-The difference between the medians is `r impact.median`; Result: no large shift in the output median
+The new dataset has a mean of 10766.2 and a median of `median.steps2`
+The difference between the means is 0; Result: no large shift in the output mean
+The difference between the medians is -1.2; Result: no large shift in the output median
 
 ## Are there differences in activity patterns between weekdays and weekends?
 For this part of the assignment we had to take the date and then compute whether that data point fell on a weekend or a weekday and then we would graph the results to see if there was any visual differences between the two.
@@ -184,7 +204,8 @@ For this part of the assignment we had to take the date and then compute whether
 I opted to use the weekdays() function to determine the day that the date fell on.  Then I built a lookup table for each day that corresponding to 'weekend' or 'weekday'.  I then used the merge function to 'lookup' each day and fill in the weekend/day value.
 
 The following code performs the "weekday / weekend"" encoding:
-```{r daypart, echo=TRUE}
+
+```r
 ##      Add in day of the week
 day<-as.data.frame(weekdays(data.new$date))
 names(day)<-"day"
@@ -207,7 +228,8 @@ Note:  the output of the tapply is a matrix table.
        this table has to be reshaped into a normal data.frame in order to do the plots
        
 The following code performs the mean calculation, reshape and plots:
-```{r panel_plot, echo=TRUE}
+
+```r
 ##      Prep the data (calculate the means)
 answer<-tapply(data.withDay$steps, list(weektype=data.withDay$Type, interval=data.withDay$interval), mean)
 
@@ -217,6 +239,8 @@ df<-melt(answer, varnames=c("Type", "Interval"), value.name="AvgSteps")
  library("lattice")
 with(df, xyplot(value~Interval|Type, type="l", ann=FALSE, ylab="Number of steps", layout=c(1,2)))
 ```
+
+![plot of chunk panel_plot](figure/panel_plot.png) 
 #### Output
 The resulting two panel plot shows the following:
 - activity starts earlier for the weekday activity graph; so people are more active earlier in the day
